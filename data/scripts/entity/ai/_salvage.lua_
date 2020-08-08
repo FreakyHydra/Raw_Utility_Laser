@@ -1,0 +1,41 @@
+--[[
+function SalvageAI.instance.getHarvestMaterial(weapons)
+    
+    print("check salvaging-possibility of " .. weapons.category)
+
+    local retVal = weapons.material.value
+    if weapons.metalRefinedEfficiency > retVal then
+        retVal = weapons.metalRefinedEfficiency
+    end
+
+    if weapons.metalRawEfficiency > retVal then
+        retVal = weapons.metalRawEfficiency
+    end
+
+    if weapons.metalRefinedEfficiency > 0 or weapons.metalRawEfficiency > 0 then
+        -- return weapons.material.value
+        return retVal * 100
+    end
+
+    
+    if weapons.category == WeaponCategory.Salvaging or string.find(weapons.prefix, "R-Utility") > 0 then
+        print(":)")
+        return weapons.material.value
+    end
+    print("Warning! Weapon " .. weapons.prefix .. " has no salvaging efficency at all!")
+    
+    
+    return 0
+end
+
+function SalvageAI.instance.getHasRawLasers(weapons)
+    return true
+end
+
+
+-- ensure salvaging and mining lasers can salvage, we'll reduce the efficiency of mininglaser later
+function SalvageAI.instance.weaponCategoryMatches(category)
+    -- return category == WeaponCategory.Salvaging or category == WeaponCategory.Armed
+    return true
+end
+]]--
